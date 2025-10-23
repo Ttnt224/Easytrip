@@ -1,0 +1,1 @@
+const String GEMENI_API_KEY ="AIzaSyDXxdRBunrj2iSmthWmLO91g0Sf6-VXGCM";
