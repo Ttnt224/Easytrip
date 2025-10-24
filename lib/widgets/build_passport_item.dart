@@ -193,11 +193,13 @@ class _BuildPassportItemState extends State<BuildPassportItem> {
           const SizedBox(height: 10),
           ...widget.children,
           const SizedBox(height: 10),
+
           //#1 เพิ่ม เส้น
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Divider(height: 1, color: Colors.grey.shade300),
           ), //#จบ 1
+          
           Padding(
             padding: const EdgeInsets.all(8),
             child: Column(
