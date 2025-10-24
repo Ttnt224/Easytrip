@@ -357,7 +357,7 @@ class _ContainerShowTripState extends State<ContainerShowTrip> {
             //#10 เพิ่ม เส้น
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Divider(height: 1, color: Colors.grey.shade200),
+              child: Divider(height: 1, color: Colors.grey.shade300),
             ), //#จบ 10
 
             //#9 ก็อป Elevatebutton ปุ่มกด กับ Row ออกมาจาก column อันเดิมเเล้วเอามาใส่ column นอกสุดแทน สลับตำแหน่งของ 2 อันนี้ด้วย เอาปุ่มไปไว้ด้านล่าง แล้วก็เปลี่ยน Icon button เป็น Icon ธรรมดา

@@ -49,11 +49,12 @@ class _EditPassportDialogState extends State<EditPassportDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      backgroundColor: Colors.white, //#1 เพิ่มพื้นหลัง
       //หัวชื่อของ alertdialog
       title: Center(
         child: Text(
           "แก้ไขหนังสือเดินทาง",
-          style: GoogleFonts.kanit(fontSize: 20),
+          style: GoogleFonts.kanit(fontSize: 20, fontWeight: FontWeight.bold),//#2 เพิ่มตัวหนา fontWeight
         ),
       ),
       //ส่วนเนื้อหา alertdialog
@@ -65,11 +66,17 @@ class _EditPassportDialogState extends State<EditPassportDialog> {
             TextField(
               controller: _passportNumberController,
               decoration: InputDecoration(
-                prefixIcon: Icon(Icons.credit_card),
+                prefixIcon: Icon(Icons.credit_card, color: Color(0xFF1A237E)),
                 hintText: "หมายเลขหนังสือเดินทาง",
+                floatingLabelBehavior: FloatingLabelBehavior.always,
                 filled: true,
+                fillColor: Colors.grey.shade50,
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(6),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide(color: Color(0xFF1A237E), width: 2),
                 ),
               ),
             ),
@@ -77,16 +84,29 @@ class _EditPassportDialogState extends State<EditPassportDialog> {
             //เลือกวันที่ออกหนังสือ
             TextField(
               controller: _dateIssueController,
+              //#3 เพิ่ม ui ก็อปวางเลย
               decoration: InputDecoration(
                 labelText: "วันออกหนังสือ",
-                labelStyle: GoogleFonts.kanit(fontSize: 17),
-                floatingLabelBehavior: FloatingLabelBehavior.always,
-                prefixIcon: Icon(Icons.calendar_today),
-                filled: true,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(6),
+                labelStyle: GoogleFonts.kanit(
+                  fontSize: 18,
+                  color: Color(0xFF1A237E),
+                  fontWeight: FontWeight.bold,
                 ),
-              ),
+                floatingLabelBehavior: FloatingLabelBehavior.always,
+                prefixIcon: Icon(
+                  Icons.calendar_today,
+                  color: Color(0xFF1A237E),
+                ),
+                filled: true,
+                fillColor: Colors.grey.shade50,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide(color: Color(0xFF1A237E), width: 2),
+                ),
+              ),//#3 จบ
               readOnly: true,
               onTap: () async {
                 DateTime? picked = await showDatePicker(
@@ -94,6 +114,17 @@ class _EditPassportDialogState extends State<EditPassportDialog> {
                   initialDate: DateTime.now(),
                   firstDate: DateTime(2000),
                   lastDate: DateTime(2100),
+                  //#4 เพิ่ม builder ก็อปวางเลย
+                  builder: (context, child) {
+                    return Theme(
+                      data: Theme.of(context).copyWith(
+                        colorScheme: ColorScheme.light(
+                          primary: Color(0xFF1A237E),
+                        ),
+                      ),
+                      child: child!,
+                    );
+                  },//#4
                 );
                 if (picked != null) {
                   setState(() {
@@ -106,16 +137,29 @@ class _EditPassportDialogState extends State<EditPassportDialog> {
             //เลือกวันที่หมดอายุ
             TextField(
               controller: _dateExpireController,
+              //#5 เพิ่ม ui ก็อปวางเลย
               decoration: InputDecoration(
                 labelText: "วันหมดอายุ",
-                labelStyle: GoogleFonts.kanit(fontSize: 17),
-                floatingLabelBehavior: FloatingLabelBehavior.always,
-                prefixIcon: Icon(Icons.event_busy),
-                filled: true,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(6),
+                labelStyle: GoogleFonts.kanit(
+                  fontSize: 18,
+                  color: Color(0xFF1A237E),
+                  fontWeight: FontWeight.bold,
                 ),
-              ),
+                floatingLabelBehavior: FloatingLabelBehavior.always,
+                prefixIcon: Icon(
+                  Icons.calendar_today,
+                  color: Color(0xFF1A237E),
+                ),
+                filled: true,
+                fillColor: Colors.grey.shade50,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide(color: Color(0xFF1A237E), width: 2),
+                ),
+              ),//#5 จบ
               readOnly: true,
               onTap: () async {
                 DateTime? picked = await showDatePicker(
@@ -123,7 +167,18 @@ class _EditPassportDialogState extends State<EditPassportDialog> {
                   initialDate: DateTime.now(),
                   firstDate: DateTime(2000),
                   lastDate: DateTime(2100),
-                );
+                  //#6 เพิ่ม builder ก็อปวางเลย
+                  builder: (context, child) {
+                    return Theme(
+                      data: Theme.of(context).copyWith(
+                        colorScheme: ColorScheme.light(
+                          primary: Color(0xFF1A237E),
+                        ),
+                      ),
+                      child: child!,
+                    );
+                  },
+                );//#6 จบ
                 if (picked != null) {
                   setState(() {
                     _dateExpireController.text = picked.toString().split(
@@ -139,22 +194,18 @@ class _EditPassportDialogState extends State<EditPassportDialog> {
       ),
       actions: [
         TextButton(
-          style: TextButton.styleFrom(
-            backgroundColor: Colors.red
-          ),
+          style: TextButton.styleFrom(backgroundColor: Colors.red),
           onPressed: () {
             //กดเเล้วกลับไปหน้าก่อนหน้า
             Navigator.of(context).pop();
           },
-          child: Text("ยกเลิก",style: GoogleFonts.kanit(
-            color: Colors.white,
-            fontSize: 14
-          ),),
+          child: Text(
+            "ยกเลิก",
+            style: GoogleFonts.kanit(color: Colors.white, fontSize: 14),
+          ),
         ),
         TextButton(
-          style: TextButton.styleFrom(
-            backgroundColor: Colors.green
-          ),
+          style: TextButton.styleFrom(backgroundColor: Colors.green),
           onPressed: () {
             //กดเพิ่มข้อมูล
             // ตรวจสอบว่าข้อมูลครบถ้วนหรือไม่
@@ -173,10 +224,10 @@ class _EditPassportDialogState extends State<EditPassportDialog> {
               Navigator.of(context).pop();
             }
           },
-          child: Text("เพิ่ม",style: GoogleFonts.kanit(
-            fontSize: 14,
-            color: Colors.white
-          ),),
+          child: Text(
+            "เพิ่ม",
+            style: GoogleFonts.kanit(fontSize: 14, color: Colors.white),
+          ),
         ),
       ],
     );

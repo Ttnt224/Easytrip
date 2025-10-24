@@ -196,7 +196,7 @@ class _BuildPassportItemState extends State<BuildPassportItem> {
           //#1 เพิ่ม เส้น
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Divider(height: 1, color: Colors.grey.shade200),
+            child: Divider(height: 1, color: Colors.grey.shade300),
           ), //#จบ 1
           Padding(
             padding: const EdgeInsets.all(8),

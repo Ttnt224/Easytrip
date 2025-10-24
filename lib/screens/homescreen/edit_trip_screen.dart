@@ -254,7 +254,7 @@ class _EditTripScreenState extends State<EditTripScreen> {
                             ),
                           ),
                           filled: true,
-                          fillColor: Colors.grey.shade50,
+                          fillColor: Colors.grey.shade200,
                         ), //#5 จบ
                       ),
                       //จะแสดงเมื่อกดพิมพ์เท่านั้น
@@ -354,6 +354,7 @@ class _EditTripScreenState extends State<EditTripScreen> {
                                 labelStyle: GoogleFonts.kanit(
                                   fontSize: 18,
                                   color: Color(0xFF1A237E),
+                                  fontWeight: FontWeight.bold
                                 ),
                                 floatingLabelBehavior:
                                     FloatingLabelBehavior.always,
@@ -362,7 +363,7 @@ class _EditTripScreenState extends State<EditTripScreen> {
                                   color: Color(0xFF1A237E),
                                 ),
                                 filled: true,
-                                fillColor: Colors.grey.shade50,
+                                fillColor: Colors.grey.shade200,
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(12),
                                   borderSide: BorderSide.none,
@@ -418,8 +419,9 @@ class _EditTripScreenState extends State<EditTripScreen> {
                               decoration: InputDecoration(
                                 labelText: "วันกลับ",
                                 labelStyle: GoogleFonts.kanit(
-                                  fontSize: 16,
+                                  fontSize: 18,
                                   color: Color(0xFF1A237E),
+                                  fontWeight: FontWeight.bold
                                 ),
                                 floatingLabelBehavior:
                                     FloatingLabelBehavior.always,
@@ -428,7 +430,7 @@ class _EditTripScreenState extends State<EditTripScreen> {
                                   color: Color(0xFF1A237E),
                                 ),
                                 filled: true,
-                                fillColor: Colors.grey.shade50,
+                                fillColor: Colors.grey.shade200,
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(6),
                                   borderSide: BorderSide.none, //ทำให้ไม่มีขอบ
@@ -440,7 +442,7 @@ class _EditTripScreenState extends State<EditTripScreen> {
                                     width: 2,
                                   ),
                                 ),
-                              ),
+                              ),//#11 จบ
                               readOnly: true,
                               onTap: () async {
                                 DateTime? picked = await showDatePicker(
@@ -458,7 +460,7 @@ class _EditTripScreenState extends State<EditTripScreen> {
                                       ),
                                       child: child!,
                                     );
-                                  },
+                                  },//#12 จบ
                                 );
                                 if (picked != null) {
                                   setState(() {

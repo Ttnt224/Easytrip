@@ -68,172 +68,332 @@ class _TripScreenViewState extends State<TripScreenView> {
                   ),
                 ),
                 const SizedBox(height: 10),
-                Text(
-                  "เลือกจุดหมาย",
-                  style: GoogleFonts.kanit(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
+                //#1 ก็อปตั้งแต่ตรง text เลือกจุดหมาย จนถึง if (_showList) สร้าง column เเล้วเอาโค้ดที่ก็อปมาไปใส่ แล้วก็คลุม column() ด้วย container
+                Container(
+                  padding: EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(16),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: 0.05),
+                        blurRadius: 10,
+                        offset: Offset(0, 4),
+                      ),
+                    ],
                   ),
-                ),
-                const SizedBox(height: 10),
-                //ตัว searchbar
-                TextFormField(
-                  controller: _countryController,
-                  onChanged: (value) {
-                    final query = value.trim().toLowerCase();
-                    setState(() {
-                      if (query.isNotEmpty) {
-                        _showList = true;
-                        filteredCountry = allCountries
-                            .where((c) => c.toLowerCase().contains(query))
-                            .toList();
-                      } else {
-                        _showList = false;
-                        filteredCountry = [];
-                      }
-                    });
-                  },
-                  decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.search),
-                    hintText: "ค้นหา..",
-                    hintStyle: GoogleFonts.kanit(
-                      fontSize: 18,
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "กรุณากรอกจุดหมายปลายทาง";
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 10),
-                //จะแสดงเมื่อกดพิมพ์เท่านั้น
-                if (_showList)
-                  Container(
-                    constraints: const BoxConstraints(
-                      maxHeight: 200,
-                    ), //กำหนดขนาดมากสุดให้ container
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(12),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey,
-                          blurRadius: 15,
-                          offset: const Offset(0, 5),
-                        ),
-                      ],
-                    ),
-                    child: ListView.builder(
-                      itemCount: filteredCountry.length,
-                      itemBuilder: (context, index) {
-                        final countryName = filteredCountry[index];
-                        return ListTile(
-                          title: Text(countryName),
-                          onTap: () {
-                            setState(() {
-                              _countryController.text =
-                                  countryName; // ใส่ชื่อใน TextformField
-                              _showList = false; // ซ่อนรายการ
-                              FocusScope.of(context).unfocus(); // ปิดคีย์บอร์ด
-                            });
-                          },
-                        );
-                      },
-                    ),
-                  ),
-                const SizedBox(height: 10),
-                Text(
-                  "เลือกวันเดินทาง",
-                  style: GoogleFonts.kanit(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 20),
-                Row(
-                  children: [
-                    Expanded(
-                      child: TextFormField(
-                        controller: _dateofdepartController,
-                        decoration: InputDecoration(
-                          labelText: "วันเดินทาง",
-                          labelStyle: GoogleFonts.kanit(fontSize: 20),
-                          floatingLabelBehavior: FloatingLabelBehavior.always,
-                          prefixIcon: Icon(Icons.calendar_today),
-                          filled: true,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(6),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      //#2 คลุม text ด้วย row
+                      Row(
+                        children: [
+                          //#3 เพิ่ม container
+                          Container(
+                            padding: EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              color: Color(0xFF1A237E).withValues(alpha: 0.1),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Icon(
+                              Icons.location_on,
+                              color: Color(0xFF1A237E),
+                              size: 24,
+                            ),
+                          ), //#3 จบ
+                          SizedBox(width: 12),
+                          Text(
+                            "เลือกจุดหมาย",
+                            style: GoogleFonts.kanit(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFF1A237E),
+                            ),
                           ),
-                        ),
-                        readOnly: true,
-                        onTap: () async {
-                          DateTime? picked = await showDatePicker(
-                            context: context,
-                            initialDate: DateTime.now(),
-                            firstDate: DateTime(2000),
-                            lastDate: DateTime(2100),
-                          );
-                          if (picked != null) {
-                            setState(() {
-                              _dateofdepartController.text = picked
-                                  .toString()
-                                  .split(" ")[0];
-                            });
-                          }
+                        ],
+                      ), //2 จบ
+                      const SizedBox(height: 10),
+                      //ตัว searchbar
+                      TextFormField(
+                        controller: _countryController,
+                        onChanged: (value) {
+                          final query = value.trim().toLowerCase();
+                          setState(() {
+                            if (query.isNotEmpty) {
+                              _showList = true;
+                              filteredCountry = allCountries
+                                  .where((c) => c.toLowerCase().contains(query))
+                                  .toList();
+                            } else {
+                              _showList = false;
+                              filteredCountry = [];
+                            }
+                          });
                         },
+                        //#4 เปลี่นน font
+                        style: GoogleFonts.kanit(fontSize: 16),
+
+                        //#5 แก้ตรง decoration ก็อปไปวางได้เลย
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(
+                            Icons.search,
+                            color: Color.fromARGB(255, 21, 20, 95),
+                          ),
+                          hintText: "ค้นหา...",
+                          hintStyle: GoogleFonts.kanit(
+                            fontSize: 16,
+                            color: Colors.grey.shade400,
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide.none,
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide(
+                              color: Color.fromARGB(255, 21, 20, 95),
+                              width: 2,
+                            ),
+                          ),
+                          filled: true,
+                          fillColor: Colors.grey.shade200,
+                        ), //#5 จบ
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return "กรุณากรอกวันที่ออกเดินทาง";
+                            return "กรุณากรอกจุดหมายปลายทาง";
                           }
                           return null;
                         },
                       ),
-                    ),
-                    const SizedBox(width: 15),
-                    Expanded(
-                      child: TextFormField(
-                        controller: _dateofreturnController,
-                        decoration: InputDecoration(
-                          labelText: "วันกลับ",
-                          labelStyle: GoogleFonts.kanit(fontSize: 20),
-                          floatingLabelBehavior: FloatingLabelBehavior.always,
-                          prefixIcon: Icon(Icons.event_busy),
-                          filled: true,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(6),
+                      const SizedBox(height: 10),
+                      //จะแสดงเมื่อกดพิมพ์เท่านั้น
+                      if (_showList)
+                        Container(
+                          constraints: const BoxConstraints(
+                            maxHeight: 200,
+                          ), //กำหนดขนาดมากสุดให้ container
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(12),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey,
+                                blurRadius: 15,
+                                offset: const Offset(0, 5),
+                              ),
+                            ],
+                          ),
+                          child: ListView.builder(
+                            itemCount: filteredCountry.length,
+                            itemBuilder: (context, index) {
+                              final countryName = filteredCountry[index];
+                              return ListTile(
+                                title: Text(countryName),
+                                onTap: () {
+                                  setState(() {
+                                    _countryController.text =
+                                        countryName; // ใส่ชื่อใน TextformField
+                                    _showList = false; // ซ่อนรายการ
+                                    FocusScope.of(
+                                      context,
+                                    ).unfocus(); // ปิดคีย์บอร์ด
+                                  });
+                                },
+                              );
+                            },
                           ),
                         ),
-                        readOnly: true,
-                        onTap: () async {
-                          DateTime? picked = await showDatePicker(
-                            context: context,
-                            initialDate: DateTime.now(),
-                            firstDate: DateTime(2000),
-                            lastDate: DateTime(2100),
-                          );
-                          if (picked != null) {
-                            setState(() {
-                              _dateofreturnController.text = picked
-                                  .toString()
-                                  .split(" ")[0];
-                            });
-                          }
-                        },
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return "กรุณากรอกวันที่กลับจากการเดินทาง";
-                          }
-                          return null;
-                        },
+                    ],
+                  ),
+                ), //#1
+                const SizedBox(height: 10),
+
+                //#6 ก็อปตั้งแต่ text เลือกวันเดินทาง ถึง Row() สร้าง column() แล้วเอาไปวาง เเล้วก็คลุม column() ด้วย container อีกที
+                Container(
+                  padding: EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(16),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: 0.05),
+                        blurRadius: 10,
+                        offset: Offset(0, 4),
                       ),
-                    ),
-                  ],
-                ),
+                    ],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      //#7 สร้าง Row() คลุม text ไว้
+                      Row(
+                        children: [
+                          //9เพิ่ม container
+                          Container(
+                            padding: EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              color: Color(0xFF1A237E).withValues(alpha: 0.1),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Icon(
+                              Icons.date_range,
+                              color: Color(0xFF1A237E),
+                              size: 24,
+                            ),
+                          ),
+                          SizedBox(width: 12),
+                          Text(
+                            "เลือกวันที่เดินทาง",
+                            style: GoogleFonts.kanit(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFF1A237E),
+                            ),
+                          ),
+                        ],
+                      ), //#7 จบ
+                      const SizedBox(height: 20),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: TextFormField(
+                              controller: _dateofdepartController,
+                              //#8 เพิ่ม ui ใน decoration ก็อปวางเลย
+                              decoration: InputDecoration(
+                                labelText: "วันเดินทาง",
+                                labelStyle: GoogleFonts.kanit(
+                                  fontSize: 18,
+                                  color: Color(0xFF1A237E),
+                                  fontWeight: FontWeight.bold
+                                ),
+                                floatingLabelBehavior:
+                                    FloatingLabelBehavior.always,
+                                prefixIcon: Icon(
+                                  Icons.calendar_today,
+                                  color: Color(0xFF1A237E),
+                                ),
+                                filled: true,
+                                fillColor: Colors.grey.shade200,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                  borderSide: BorderSide.none,
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                  borderSide: BorderSide(
+                                    color: Color(0xFF1A237E),
+                                    width: 2,
+                                  ),
+                                ),
+                              ), //#8 จบ
+                              readOnly: true,
+                              onTap: () async {
+                                DateTime? picked = await showDatePicker(
+                                  context: context,
+                                  initialDate: DateTime.now(),
+                                  firstDate: DateTime(2000),
+                                  lastDate: DateTime(2100),
+                                  builder: (context, child) {
+                                    return Theme(
+                                      data: Theme.of(context).copyWith(
+                                        colorScheme: ColorScheme.light(
+                                          primary: Color(0xFF1A237E),
+                                        ),
+                                      ),
+                                      child: child!,
+                                    );
+                                  },
+                                );
+                                if (picked != null) {
+                                  setState(() {
+                                    _dateofdepartController.text = picked
+                                        .toString()
+                                        .split(" ")[0];
+                                  });
+                                }
+                              },
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return "กรุณากรอกวันที่ออกเดินทาง";
+                                }
+                                return null;
+                              },
+                            ),
+                          ),
+                          const SizedBox(width: 15),
+                          Expanded(
+                            child: TextFormField(
+                              controller: _dateofreturnController,
+                              //#9 เพิ่ม ui ใน decoration เหมือนเดิม
+                              decoration: InputDecoration(
+                                labelText: "วันกลับ",
+                                labelStyle: GoogleFonts.kanit(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                  color: Color(0xFF1A237E),
+                                ),
+                                floatingLabelBehavior:
+                                    FloatingLabelBehavior.always,
+                                prefixIcon: Icon(
+                                  Icons.event_busy,
+                                  color: Color(0xFF1A237E),
+                                ),
+                                filled: true,
+                                fillColor: Colors.grey.shade200,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(6),
+                                  borderSide: BorderSide.none, //ทำให้ไม่มีขอบ
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                  borderSide: BorderSide(
+                                    color: Color(0xFF1A237E),
+                                    width: 2,
+                                  ),
+                                ),
+                              ),//#9 จบ
+                              readOnly: true,
+                              onTap: () async {
+                                DateTime? picked = await showDatePicker(
+                                  context: context,
+                                  initialDate: DateTime.now(),
+                                  firstDate: DateTime(2000),
+                                  lastDate: DateTime(2100),
+                                  //#10 เพิ่ม builder ตรงนี้เข้าไป
+                                  builder: (context, child) {
+                                    return Theme(
+                                      data: Theme.of(context).copyWith(
+                                        colorScheme: ColorScheme.light(
+                                          primary: Color(0xFF1A237E),
+                                        ),
+                                      ),
+                                      child: child!,
+                                    );
+                                  },//#10 จบ
+                                );
+                                if (picked != null) {
+                                  setState(() {
+                                    _dateofreturnController.text = picked
+                                        .toString()
+                                        .split(" ")[0];
+                                  });
+                                }
+                              },
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return "กรุณากรอกวันที่กลับจากการเดินทาง";
+                                }
+                                return null;
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ), //#6 จบ
+
+
                 //ทำปุ่มบันทึก
                 const SizedBox(height: 25),
                 ElevatedButton(
@@ -266,12 +426,15 @@ class _TripScreenViewState extends State<TripScreenView> {
                             actions: [
                               TextButton(
                                 style: TextButton.styleFrom(
-                                  backgroundColor: Colors.green
+                                  backgroundColor: Colors.green,
                                 ),
                                 onPressed: () => Navigator.of(context).pop(),
                                 child: Text(
                                   "ตกลง",
-                                  style: GoogleFonts.kanit(fontSize: 17,color: Colors.white),
+                                  style: GoogleFonts.kanit(
+                                    fontSize: 17,
+                                    color: Colors.white,
+                                  ),
                                 ),
                               ),
                             ],
